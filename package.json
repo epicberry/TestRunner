@@ -1,0 +1,14 @@
+{
+  "name": "testrunner",
+  "version": "1.0.0",
+  "description": "Framework to run the test automation",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Param Singh",
+  "license": "ISC",
+  "devDependencies": {
+    "jscs": "^3.0.7"
+  }
+}
