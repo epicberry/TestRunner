@@ -103,7 +103,7 @@ function CreateFiles(testCases) {
 function CreateProtractorString(testCase) {
     testFlow = [];
     endFlow = [];
-    testFlow.push(`var logFile = require('../common/sendLogs.js');\nconst logEmitter = new LogEmitter(); \nlogEmitter.emit('started');\n`);
+    testFlow.push(`var logFile = require('../common/sendLogs.js');\nconst logEmitter = new LogEmitter(); \nlogEmitter.emit('started');\nvar retrievedProperties = {};\nretrievedProperties['var1'] = 1;\n`);
     testFlow.push(`describe('${testCase.description}' , function() {
 \t it(' ${testCase.description}', function() {`);
     var count = 2;
