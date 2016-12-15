@@ -3,8 +3,8 @@ exports.config = {
   specs: ['*.js'],
   // specs: ['1000.js'],
   multiCapabilities: [{
-      'browserName': 'chrome'
-      ,shardTestFiles: true,
+      'browserName': 'chrome',
+      shardTestFiles: true,
       maxInstances: 8
     }
     // , {

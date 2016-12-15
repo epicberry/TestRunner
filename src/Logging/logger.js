@@ -44,7 +44,7 @@ function ELKAdaptee(){
     // });
 
     var winston = require('winston');
-    var logsene = require('winston-logsene')
+    var logsene = require('winston-logsene');
 
     winston.handleExceptions(new winston.transports.File({
         filename: '../common/exceptions.log'
@@ -60,7 +60,7 @@ function ELKAdaptee(){
             })
         ]
     });
-    var logger = new winston.Logger()
+    logger = new winston.Logger();
 
     logger.add (logsene, {
         token: '27a8c002-4ec1-403e-828a-d571b10288ec',
@@ -86,24 +86,25 @@ function ELKAdaptee(){
 function LoggingAdapter(testName, status) {
   // console.log('Choosing Adapter');
     var logWith = 'ELKLogit';
+    var logUsing;
 
     if(logWith=='ELK'){
-      var logUsing = new ELKAdaptee();
+      logUsing = new ELKAdaptee();
       this.log = function log() {
               logUsing.log(testName, status);
-          }
+          };
     }
     else if(logWith=='Graphite'){
-      var logUsing = new GraphiteAdaptee();
+      logUsing = new GraphiteAdaptee();
       this.log = function log() {
               logUsing.log(testName, status);
-          }
+          };
     }
-    else if(logWith='ELKLogit'){
-      var logUsing = new ELKLogitAdaptee();
+    else if(logWith=='ELKLogit'){
+      logUsing = new ELKLogitAdaptee();
       this.log = function log() {
               logUsing.log(testName, status);
-          }
+          };
     }
 }
 
