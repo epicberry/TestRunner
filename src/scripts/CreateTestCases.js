@@ -9,65 +9,110 @@ function PrepareTestFiles() {
     var testCases = getTestCases();
 
     testCases.forEach(function (testCase) {
-        var strTestFlow = CreateProtractorString(testCase);
+        var testAdapter = require('../lib/adapters/testAdapter.js');
+        testAdapter.createTest(testCase);
 
-        var fs = require('fs');
-        fs.writeFile("../TestFiles/" + testCase.testCaseId + ".js", strTestFlow, function (err) {
-            if (err) {
-                return console.log(err);
-            }
-        });
+        // var strTestFlow = CreateProtractorStringWithoutThen(testCase);
     });
 }
 
-function CreateProtractorString(testCase) {
-    testFlow = [];
-    endFlow = [];
-    testFlow.push(`/*jshint esversion: 6 */\nconst logEmitter = require('../utils/logEmitter.js'); \nlogEmitter.raiseStartEvent('${testCase.testCaseId}');\nvar retrievedProperties = {};\n`);
-    testFlow.push(`describe('${testCase.description}' , function() {
-\t it('${testCase.description}', function() {`);
-    var count = 1;
+// function CreateProtractorStringWithoutThen(testCase) {
+//     testFlow = [];
+//     endFlow = [];
+//     testFlow.push(`/*jshint esversion: 6 */\nconst logEmitter = require('../utils/logEmitter.js'); \nlogEmitter.raiseStartEvent('${testCase.testCaseId}');\nvar retrievedProperties = {};\n`);
+//     testFlow.push(`describe('${testCase.description}' , function() {
+// \t it('${testCase.description}', function() {`);
+//     var count = 1;
 
-    testCase.testSteps.forEach(function (testStep) {
-        passEntry = `logEmitter.raiseEndEvent('${testCase.testCaseId}', 'passed');`;
+//     testCase.testSteps.forEach(function (testStep) {
+//         passEntry = `logEmitter.raiseEndEvent('${testCase.testCaseId}', 'passed');`;
 
-        errorFtn = `, function(err){
-logEmitter.raiseEndEvent('${testCase.testCaseId}', 'failure');
-throw new Error('Error occurred'); 
-});
-}`;
+//         errorFtn = `, function(err){
+// logEmitter.raiseEndEvent('${testCase.testCaseId}', 'failure');
+// throw new Error('Error occurred'); 
+// });
+// }`;
 
-        switch (testStep.type) {
-            case 'navigate':
-                testFlow.push(`\nbrowser.get('${testStep.url}').then(function(){`);
-                endFlow.push(errorFtn);
-                break;
-            case 'input':
-                testFlow.push(`\nelement(by.${testStep.selectBy} ('${testStep.elementName}')).sendKeys('${testStep.value}').then(function(){`);
-                endFlow.push(errorFtn);
-                break;
-            case 'click':
-                testFlow.push(`\nelement(by.${testStep.selectBy}('${testStep.elementName}')).click().then(function(){`);
-                endFlow.push(errorFtn);
-                break;
-            case 'sleep':
-                testFlow.push(`\nbrowser.sleep(${testStep.timeInMilliSecs}).then(function(){`);
-                endFlow.push(errorFtn);
-                break;
-            // case 'dbCall':
-            //     strTestFlow += "\n browser.sleep(" + testStep.timeInMilliSecs + "); ";
-            //     break;
-            default:
-                console.log('In default');
-        }
-        count++;
-    });
+//         switch (testStep.type) {
+//             case 'navigate':
+//                 testFlow.push(`\nbrowser.get('${testStep.url}');`);
+//                 endFlow.push(errorFtn);
+//                 break;
+//             case 'input':
+//                 testFlow.push(`\nelement(by.${testStep.selectBy} ('${testStep.elementName}')).sendKeys('${testStep.value}');`);
+//                 endFlow.push(errorFtn);
+//                 break;
+//             case 'click':
+//                 testFlow.push(`\nelement(by.${testStep.selectBy}('${testStep.elementName}')).click();`);
+//                 endFlow.push(errorFtn);
+//                 break;
+//             case 'sleep':
+//                 testFlow.push(`\nbrowser.sleep(${testStep.timeInMilliSecs});`);
+//                 endFlow.push(errorFtn);
+//                 break;
+//             // case 'dbCall':
+//             //     strTestFlow += "\n browser.sleep(" + testStep.timeInMilliSecs + "); ";
+//             //     break;
+//             default:
+//                 console.log('In default');
+//         }
+//         count++;
+//     });
 
-    testFlow.push(`\n${passEntry}\n`);
-    testFlow.push("});".repeat(count-2));
+//     testFlow.push(`\n${passEntry}\n`);
+//     testFlow.push("});".repeat(2));
 
-    return testFlow.join('');
-}
+//     return testFlow.join('');
+// }
+
+// function CreateProtractorString(testCase) {
+//     testFlow = [];
+//     endFlow = [];
+//     testFlow.push(`/*jshint esversion: 6 */\nconst logEmitter = require('../utils/logEmitter.js'); \nlogEmitter.raiseStartEvent('${testCase.testCaseId}');\nvar retrievedProperties = {};\n`);
+//     testFlow.push(`describe('${testCase.description}' , function() {
+// \t it('${testCase.description}', function() {`);
+//     var count = 1;
+
+//     testCase.testSteps.forEach(function (testStep) {
+//         passEntry = `logEmitter.raiseEndEvent('${testCase.testCaseId}', 'passed');`;
+
+//         errorFtn = `, function(err){
+// logEmitter.raiseEndEvent('${testCase.testCaseId}', 'failure');
+// throw new Error('Error occurred'); 
+// });
+// }`;
+
+//         switch (testStep.type) {
+//             case 'navigate':
+//                 testFlow.push(`\nbrowser.get('${testStep.url}').then(function(){`);
+//                 endFlow.push(errorFtn);
+//                 break;
+//             case 'input':
+//                 testFlow.push(`\nelement(by.${testStep.selectBy} ('${testStep.elementName}')).sendKeys('${testStep.value}').then(function(){`);
+//                 endFlow.push(errorFtn);
+//                 break;
+//             case 'click':
+//                 testFlow.push(`\nelement(by.${testStep.selectBy}('${testStep.elementName}')).click().then(function(){`);
+//                 endFlow.push(errorFtn);
+//                 break;
+//             case 'sleep':
+//                 testFlow.push(`\nbrowser.sleep(${testStep.timeInMilliSecs}).then(function(){`);
+//                 endFlow.push(errorFtn);
+//                 break;
+//             // case 'dbCall':
+//             //     strTestFlow += "\n browser.sleep(" + testStep.timeInMilliSecs + "); ";
+//             //     break;
+//             default:
+//                 console.log('In default');
+//         }
+//         count++;
+//     });
+
+//     testFlow.push(`\n${passEntry}\n`);
+//     testFlow.push("});".repeat(count - 2));
+
+//     return testFlow.join('');
+// }
 
 
 // function CreateProtractorString(testCase) {
