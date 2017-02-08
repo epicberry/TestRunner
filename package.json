@@ -4,7 +4,8 @@
   "description": "Framework to run the test automation",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "tests": "protractor src/testFiles/conf.js",
+    "createTests": "node src/scripts/CreateTestCases.js"
   },
   "author": "Param Singh",
   "license": "ISC",
@@ -18,5 +19,10 @@
     "protractor": "^4.0.13",
     "run-sequence": "^1.2.2",
     "ssh2": "^0.5.4"
+  },
+  "dependencies": {
+    "node-logitio": "^1.0.3",
+    "winston": "^2.3.1",
+    "winston-logsene":"^1.2.1"
   }
 }

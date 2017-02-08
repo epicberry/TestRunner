@@ -20,7 +20,7 @@ function ELKLogitAdaptee(){
   console.log('Reached Logging using logit');
   this.log = function(testName, status) {
     var logit = require('node-logitio');
-    logit.init('489813f6-a692-4394-9573-9e291ab00a6f', { logToConsole: true });
+    logit.init('59a207b2-2833-42bc-a59a-86e5d05d347b', { logToConsole: true });
     //logit.log('Logged by Param');
     var testDetails = testName.split(".");
     //console.log(testDetails[0] + '--' + testDetails[1] + '--' + testDetails[2]);

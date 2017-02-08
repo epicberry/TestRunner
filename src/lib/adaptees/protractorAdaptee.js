@@ -8,8 +8,8 @@ this.createTest = function (testCase) {
     testFlow.push(`const logEmitter = require('../../utils/logEmitter.js');`);
     testFlow.push(`logEmitter.raiseStartEvent('${testCase.testCaseID}');`);
     testFlow.push(`var retrievedProperties = {};`);
-    testFlow.push(`require("../../utils/db/mongoPool.js").initPool();`);
-    testFlow.push(`var mongoPool = require("../../utils/db/mongoPool.js");`);
+    //testFlow.push(`require("../../utils/db/mongoPool.js").initPool();`);
+    //testFlow.push(`var mongoPool = require("../../utils/db/mongoPool.js");`);
     testFlow.push(``);
 
     testFlow.push(`describe('${testCase.description}' , function() {
